@@ -8,12 +8,14 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("accueil");
 
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Active section detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -23,10 +25,7 @@ const Navbar = () => {
           }
         });
       },
-      {
-        rootMargin: "-40% 0px -40% 0px",
-        threshold: 0.1,
-      }
+      { rootMargin: "-45% 0px -45% 0px" }
     );
 
     sections.forEach((id) => {
@@ -38,81 +37,108 @@ const Navbar = () => {
   }, []);
 
   const linkClass = (id) =>
-    `transition-colors duration-300 ${
+    `text-subtitle transition-all duration-300 ${
       activeSection === id
         ? "text-mujec-gold font-bold"
         : "text-white hover:text-mujec-gold"
     }`;
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-4 flex justify-between items-center transition-all duration-300 ${
-        scrolled
-          ? "bg-mujec-blue/90 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      {/* Logo */}
-      <div className="flex items-center gap-4">
-        <img
-          src={logo}
-          alt="MUJEC"
-          className={`rounded-full border-2 border-white object-cover transition-all duration-300 ${
-            scrolled ? "w-12 h-12" : "w-16 h-16"
-          }`}
+    <>
+      {/* Overlay mobile */}
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
         />
-        <div className="text-white">
-          <h1 className="font-extrabold text-lg leading-none">
-            MUTUELLE DES JEUNES
-          </h1>
-          <p className="text-sm font-semibold">
-            ENTREPRENEURS DU CAMEROUN
-          </p>
-        </div>
-      </div>
+      )}
 
-      {/* Desktop */}
-      <div className="hidden md:flex items-center gap-8">
-        <a href="#accueil" className={linkClass("accueil")}>Accueil</a>
-        <a href="#services" className={linkClass("services")}>Services</a>
-        <a href="#comptes" className={linkClass("comptes")}>Comptes</a>
-        <a href="#apropos" className={linkClass("apropos")}>À Propos</a>
-
-        <a
-          href="#contact"
-          className="bg-mujec-gold text-mujec-dark px-6 py-2 rounded-full font-bold hover:scale-105 transition"
-        >
-          Nous Contacter
-        </a>
-      </div>
-
-      {/* Mobile */}
-      <button
-        onClick={() => setMenuOpen(!menuOpen)}
-        className="md:hidden text-white text-2xl"
-      >
-        {menuOpen ? "✖" : "☰"}
-      </button>
-
-      <div
-        className={`fixed inset-0 bg-mujec-blue/95 backdrop-blur-md flex flex-col items-center justify-center gap-6 md:hidden transition-all duration-500 ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-mujec-blue/95 backdrop-blur-md shadow-lg"
+            : "bg-transparent"
         }`}
       >
-        {sections.map((id) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            onClick={() => setMenuOpen(false)}
-            className={linkClass(id)}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <img
+              src={logo}
+              alt="MUJEC"
+              className={`rounded-full border-2 border-white transition-all ${
+                scrolled ? "w-10 h-10" : "w-14 h-14"
+              }`}
+            />
+            <div className="text-white leading-tight hidden sm:block">
+              <h1 className="font-bold text-title">
+                MUTUELLE DES JEUNES
+              </h1>
+              <p className="text-subtitle">
+                ENTREPRENEURS DU CAMEROUN
+              </p>
+            </div>
+          </div>
+
+          {/* Desktop menu */}
+          <div className="hidden md:flex items-center gap-8">
+            {sections.map((id) => (
+              <a key={id} href={`#${id}`} className={linkClass(id)}>
+                {id === "apropos"
+                  ? "À Propos"
+                  : id.charAt(0).toUpperCase() + id.slice(1)}
+              </a>
+            ))}
+
+            <a
+              href="#contact"
+              className="bg-mujec-gold text-mujec-dark px-5 py-2 rounded-full font-bold text-subtitle hover:scale-105 transition"
+            >
+              Nous Contacter
+            </a>
+          </div>
+
+          {/* Burger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-white text-2xl z-50"
+            aria-label="Menu"
           >
-            {id === "apropos"
-              ? "À Propos"
-              : id.charAt(0).toUpperCase() + id.slice(1)}
-          </a>
-        ))}
-      </div>
-    </nav>
+            ☰
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        <div
+          className={`md:hidden fixed top-0 right-0 h-full w-72 bg-mujec-blue z-50 transform transition-transform duration-300 ${
+            menuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col gap-6 px-6 pt-24">
+            {sections.map((id) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setMenuOpen(false)}
+                className={`${linkClass(id)} text-lg`}
+              >
+                {id === "apropos"
+                  ? "À Propos"
+                  : id.charAt(0).toUpperCase() + id.slice(1)}
+              </a>
+            ))}
+
+            <a
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
+              className="mt-6 bg-mujec-gold text-mujec-dark py-3 text-center rounded-full font-bold"
+            >
+              Nous Contacter
+            </a>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 
