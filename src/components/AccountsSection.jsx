@@ -23,7 +23,7 @@ const accounts = [
       "PV d'autorisation d'ouverture du compte association",
       "Abonnement SMS Banking 1.000 FCFA",
       "Frais mensuel SMS Banking 500 FCFA",
-      "02 photos 4x4 Par signataire" ,
+      "02 photos 4x4 Par signataire",
     ],
   },
   {
@@ -41,7 +41,7 @@ const accounts = [
       "Demande d'ouverture du compte courant",
       "Abonnement SMS Banking 1.000 FCFA",
       "Frais mensuel SMS Banking 500 FCFA",
-      "02 photos 4x4 Par signataire" ,
+      "02 photos 4x4 Par signataire",
     ],
   },
   {
@@ -137,30 +137,32 @@ const AccountsSection = () => {
     <section
       id="comptes"
       ref={sectionRef}
-      className="bg-gray-50 py-2 px-4 md:px-10 scroll-mt-4"
+      className="bg-gray-50 py-8 px-3 sm:px-4 md:px-10 scroll-mt-4"
     >
-      {/* Header */}
+      {/* HEADER */}
       <div
-        className={`max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-14 transition-all duration-700 ${
+        className={`max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-end gap-4 md:gap-6 mb-10 md:mb-14 transition-all duration-700 ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
         <div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-mujec-dark">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-mujec-dark">
             Nos Comptes
           </h2>
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2 text-sm sm:text-base">
             Choisissez le compte adapté à vos besoins
           </p>
         </div>
-        <span className="bg-mujec-dark text-white px-5 py-2 rounded-full text-sm font-bold w-fit">
+
+        <span className="bg-mujec-dark text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold w-fit">
           6 Types de Comptes
         </span>
       </div>
 
-      {/* Grid */}
+      {/* GRID */}
       <div className="max-w-7xl mx-auto">
-        <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 px-1">
+        <div className="grid gap-5 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+
           {accounts.map((account, index) => {
             const Icon = account.icon;
 
@@ -174,34 +176,34 @@ const AccountsSection = () => {
                 }`}
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <div className="group bg-white p-8 rounded-3xl shadow-lg border-2 border-blue-500 flex flex-col h-full hover:shadow-2xl hover:border-blue-600 transition-all duration-300">
-                  
-                  {/* Badge spécial épargne scolaire */}
+                <div className="group bg-white p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-md border border-gray-200 flex flex-col h-full md:hover:shadow-xl md:hover:border-blue-500 transition-all duration-300">
+
+                  {/* Badge */}
                   {account.title === "Compte Épargne Scolaire" && (
                     <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full mb-4 w-fit font-bold">
                       Idéal pour la rentrée scolaire
                     </span>
                   )}
 
-                  {/* Icon */}
+                  {/* ICON */}
                   <div
-                    className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center transition-all duration-500
+                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl mb-4 md:mb-6 flex items-center justify-center transition-all duration-500
                     ${
                       account.color === "gold"
                         ? "bg-mujec-gold/20 text-mujec-gold"
                         : "bg-mujec-blue/10 text-mujec-blue"
                     }
-                    group-hover:scale-110 group-hover:rotate-6`}
+                    group-hover:scale-110`}
                   >
-                    <Icon size={30} />
+                    <Icon size={24} />
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
                     {account.title}
                   </h3>
 
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-bold w-fit mb-5 ${
+                    className={`px-3 py-1 rounded-full text-xs font-bold w-fit mb-4 ${
                       account.color === "gold"
                         ? "bg-mujec-gold/20 text-mujec-gold"
                         : "bg-blue-50 text-mujec-blue"
@@ -210,15 +212,17 @@ const AccountsSection = () => {
                     {account.subtitle}
                   </span>
 
-                  <div className="mb-6">
+                  {/* PRICE */}
+                  <div className="mb-5">
                     <p className="text-sm text-gray-500">Dépôt minimum</p>
-                    <p className="text-3xl font-extrabold text-mujec-dark">
+                    <p className="text-2xl sm:text-3xl font-extrabold text-mujec-dark">
                       {account.price}{" "}
                       <span className="text-sm font-normal">FCFA</span>
                     </p>
                   </div>
 
-                  <ul className="text-sm space-y-3 mb-8 flex-grow text-gray-600">
+                  {/* LIST */}
+                  <ul className="text-xs sm:text-sm space-y-2 sm:space-y-3 mb-6 flex-grow text-gray-600">
                     {account.documents.map((doc, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-green-500 mt-0.5">✔</span>
@@ -227,8 +231,9 @@ const AccountsSection = () => {
                     ))}
                   </ul>
 
+                  {/* BUTTON */}
                   <button
-                    className={`w-full py-3 rounded-xl font-bold transition-all active:scale-95 hover:scale-105 ${
+                    className={`w-full py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base font-bold transition-all active:scale-95 hover:scale-105 ${
                       account.color === "gold"
                         ? "bg-mujec-gold text-mujec-dark"
                         : "bg-mujec-blue text-white"
@@ -236,10 +241,12 @@ const AccountsSection = () => {
                   >
                     Ouvrir ce Compte
                   </button>
+
                 </div>
               </div>
             );
           })}
+
         </div>
       </div>
     </section>

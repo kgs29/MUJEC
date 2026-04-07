@@ -8,14 +8,14 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("accueil");
 
-  // Scroll effect
+  /* ---------------- SCROLL EFFECT ---------------- */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Active section detection
+  /* ---------------- ACTIVE SECTION ---------------- */
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -25,7 +25,7 @@ const Navbar = () => {
           }
         });
       },
-      { rootMargin: "-45% 0px -45% 0px" }
+      { rootMargin: "-40% 0px -40% 0px" }
     );
 
     sections.forEach((id) => {
@@ -36,40 +36,42 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth scroll that accounts for fixed navbar height
+  /* ---------------- SCROLL SMOOTH ---------------- */
   const scrollToId = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
+
     const nav = document.querySelector("nav");
-    const navHeight = nav ? nav.offsetHeight : 0;
-    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+    const navHeight = nav ? nav.offsetHeight : 80;
+
+    const top =
+      el.getBoundingClientRect().top +
+      window.pageYOffset -
+      navHeight -
+      10;
+
     window.scrollTo({ top, behavior: "smooth" });
-    history.replaceState(null, "", `#${id}`);
+    setMenuOpen(false);
   };
 
-  // Expose nav height as a CSS variable so sections can use it for scroll-margin
+  /* ---------------- NAV HEIGHT FIX ---------------- */
   useEffect(() => {
     const updateNavHeight = () => {
       const nav = document.querySelector("nav");
-      const navHeight = nav ? nav.offsetHeight : 0;
+      const navHeight = nav ? nav.offsetHeight : 80;
       document.documentElement.style.setProperty(
         "--nav-height",
-        `${navHeight + 8}px`
+        `${navHeight + 10}px`
       );
     };
 
     updateNavHeight();
     window.addEventListener("resize", updateNavHeight);
-    window.addEventListener("load", updateNavHeight);
-
-    return () => {
-      window.removeEventListener("resize", updateNavHeight);
-      window.removeEventListener("load", updateNavHeight);
-    };
+    return () => window.removeEventListener("resize", updateNavHeight);
   }, [scrolled]);
 
   const linkClass = (id) =>
-    `text-subtitle transition-all duration-300 ${
+    `transition-all duration-300 text-sm md:text-base ${
       activeSection === id
         ? "text-mujec-gold font-bold"
         : "text-white hover:text-mujec-gold"
@@ -77,7 +79,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Overlay mobile */}
+      {/* OVERLAY MOBILE */}
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
@@ -93,95 +95,83 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          {/* Logo */}
+          
+          {/* LOGO */}
           <div className="flex items-center gap-3">
             <img
               src={logo}
               alt="MUJEC"
               className={`rounded-full border-2 border-white transition-all ${
-                scrolled ? "w-10 h-10" : "w-14 h-14"
+                scrolled ? "w-10 h-10" : "w-12 h-12 sm:w-14 sm:h-14"
               }`}
             />
+
             <div className="text-white leading-tight hidden sm:block">
-              <h1 className="font-roboto text-roboto-lg font-bold text-title">
+              <h1 className="font-bold text-sm md:text-base">
                 MUTUELLE DES JEUNES
               </h1>
-              <p className="font-roboto text-roboto-md text-subtitle">
+              <p className="text-xs md:text-sm">
                 ENTREPRENEURS DU CAMEROUN
               </p>
             </div>
           </div>
 
-          {/* Desktop menu */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* MENU DESKTOP */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {sections.map((id) => (
-              <a
+              <button
                 key={id}
-                href={`#${id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToId(id);
-                }}
-                className={`font-roboto text-roboto-base ${linkClass(id)}`}>
+                onClick={() => scrollToId(id)}
+                className={linkClass(id)}
+              >
                 {id === "apropos"
                   ? "À Propos"
                   : id.charAt(0).toUpperCase() + id.slice(1)}
-              </a>
+              </button>
             ))}
 
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToId("contact");
-              }}
-              className="font-roboto text-roboto-base bg-mujec-gold text-mujec-dark px-5 py-2 rounded-full font-bold text-subtitle hover:scale-105 transition"
+            <button
+              onClick={() => scrollToId("contact")}
+              className="bg-mujec-gold text-mujec-dark px-5 py-2 rounded-full font-bold hover:scale-105 transition"
             >
               Nous Contacter
-            </a>
+            </button>
           </div>
 
-          {/* Burger */}
+          {/* BURGER */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-white text-2xl z-50"
-            aria-label="Menu"
+            className="md:hidden text-white text-3xl z-50"
           >
-            ☰
+            {menuOpen ? "✕" : "☰"}
           </button>
         </div>
 
-        {/* Mobile menu */}
+        {/* MENU MOBILE */}
         <div
-          className={`md:hidden fixed top-0 right-0 h-full w-72 bg-mujec-blue z-50 transform transition-transform duration-300 ${
+          className={`md:hidden fixed top-0 right-0 h-full w-[80%] max-w-xs bg-mujec-blue z-50 transform transition-transform duration-300 ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="flex flex-col gap-6 px-6 pt-24">
             {sections.map((id) => (
-              <a
+              <button
                 key={id}
-                href={`#${id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToId(id);
-                  setMenuOpen(false);
-                }}
-                className={`font-roboto text-roboto-base ${linkClass(id)} text-lg`}
+                onClick={() => scrollToId(id)}
+                className={`${linkClass(id)} text-lg text-left`}
               >
                 {id === "apropos"
                   ? "À Propos"
                   : id.charAt(0).toUpperCase() + id.slice(1)}
-              </a>
+              </button>
             ))}
 
-            <a
-              href="#contact"
-              onClick={() => setMenuOpen(false)}
-              className="font-roboto text-roboto-base mt-6 bg-mujec-gold text-mujec-dark py-3 text-center rounded-full font-bold"
+            <button
+              onClick={() => scrollToId("contact")}
+              className="mt-6 bg-mujec-gold text-mujec-dark py-3 rounded-full font-bold"
             >
               Nous Contacter
-            </a>
+            </button>
           </div>
         </div>
       </nav>

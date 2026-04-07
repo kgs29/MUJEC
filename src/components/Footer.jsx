@@ -1,11 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-} from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa"; // Assure-toi que react-icons est installé
+import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 import orange from "../assets/orange-money.png";
 import mtn from "../assets/mtn-momo.png";
@@ -30,13 +26,12 @@ const item = {
 };
 
 const Footer = () => {
-  // Numéro WhatsApp avec l'indicatif pays (237 pour le Cameroun)
   const whatsappNumber = "237674571944";
 
   return (
-    <footer className="relative overflow-hidden text-white">
+    <footer className="relative overflow-hidden text-white mt-20">
 
-      {/* FOND ANIMÉ SUBTIL */}
+      {/* BACKGROUND */}
       <motion.div
         aria-hidden
         initial={{ backgroundPosition: "0% 50%" }}
@@ -45,114 +40,117 @@ const Footer = () => {
         className="absolute inset-0 bg-gradient-to-r from-mujec-blue via-[#0f2a52] to-mujec-blue bg-[length:200%_200%]"
       />
 
-      {/* CONTENU */}
+      {/* CONTENT */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="relative z-10 max-w-[1300px] mx-auto px-6 md:px-10 pt-20 pb-16"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-10 pt-16 pb-12"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
 
           {/* BRAND */}
           <motion.div variants={item}>
-            <h3 className="font-roboto text-2xl font-extrabold mb-4 tracking-wide text-white">
+            <h3 className="text-xl sm:text-2xl font-extrabold mb-4">
               MUJEC
             </h3>
-            <p className="font-roboto text-sm text-white/70 leading-relaxed">
-              Établissement de Microfinance de 1ère Catégorie – Cameroun
-              <br />
-              <span className="block mt-4">
-                <strong>Immatriculation :</strong><br />
-                COOP/GIC NO:23/215/CMR/CE/02/009/CCA/036004
-              </span>
-              <span className="block mt-2">
-                <strong>NUI :</strong> M122316408475Z
-              </span>
+
+            <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
+              Établissement de Microfinance – Cameroun
             </p>
+
+            <div className="mt-4 text-xs text-white/60 space-y-2">
+              <p>
+                <strong>Immatriculation :</strong><br />
+                COOP/GIC NO:23/215/CMR/CE/02/009
+              </p>
+              <p>
+                <strong>NUI :</strong> M122316408475Z
+              </p>
+            </div>
           </motion.div>
 
           {/* OPÉRATIONS */}
           <motion.div variants={item}>
-            <h4 className="font-roboto font-bold mb-6 text-lg text-white">Nos Opérations</h4>
-            <div className="flex flex-col gap-4">
-              {[
+            <h4 className="font-bold mb-5 text-base sm:text-lg">
+              Nos Opérations
+            </h4>
+
+            <div className="grid grid-cols-2 sm:grid-cols-1 gap-3">
+              {[ 
                 { img: orange, name: "Orange Money" },
-                { img: mtn, name: "MTN Mobile Money" },
+                { img: mtn, name: "MTN MoMo" },
                 { img: sara, name: "SARA Money" },
-                { img: campost, name: "Campost", desc: "Impôts, Frais Scolaires, etc." },
+                { img: campost, name: "Campost" },
               ].map((op, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 bg-white/10 p-3 rounded-xl border border-white/10 hover:scale-[1.04] transition group"
+                  className="flex items-center gap-3 bg-white/10 backdrop-blur-md p-2 rounded-lg border border-white/10 hover:scale-105 transition"
                 >
-                  <img src={op.img} alt={op.name} className="h-10 w-auto object-contain rounded-md" />
-                  <div className="flex flex-col">
-                    <span className="font-roboto text-sm font-bold text-white">{op.name}</span>
-                    {op.desc && <span className="text-[10px] text-white/60 leading-tight">{op.desc}</span>}
-                  </div>
+                  <img
+                    src={op.img}
+                    alt={op.name}
+                    className="h-8 w-8 object-contain"
+                    loading="lazy"
+                  />
+                  <span className="text-xs sm:text-sm font-semibold">
+                    {op.name}
+                  </span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* RÉSEAUX SOCIAUX */}
+          {/* RÉSEAUX */}
           <motion.div variants={item}>
-            <h4 className="font-roboto font-bold mb-6 text-lg text-white">Nos Réseaux</h4>
-            <div className="flex flex-wrap gap-4">
-              {/* Facebook */}
-              <a 
-                href="https://www.facebook.com/p/MUJEC-COOP-CA-61571822634008/" 
-                target="_blank" rel="noopener noreferrer" 
-                className="social-icon hover:text-blue-500"
-              >
-                <Facebook size={20} />
+            <h4 className="font-bold mb-5 text-base sm:text-lg">
+              Réseaux Sociaux
+            </h4>
+
+            <div className="flex gap-3 flex-wrap">
+              <a href="#" className="social-icon hover:text-blue-500">
+                <Facebook size={18} />
               </a>
-              
-              {/* WhatsApp Mis à jour */}
-              <a 
-                href={`https://wa.me/${whatsappNumber}?text=Bonjour MUJEC, j'aimerais avoir des informations sur vos services.`}
-                target="_blank" rel="noopener noreferrer" 
+
+              <a
+                href={`https://wa.me/${whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="social-icon hover:text-green-500"
               >
-                <FaWhatsapp size={22} />
+                <FaWhatsapp size={18} />
               </a>
 
-              {/* LinkedIn */}
-              <a 
-                href="https://www.linkedin.com/in/mujec-emf-144056379/"
-                target="_blank" rel="noopener noreferrer" 
-                className="social-icon hover:text-blue-600"
-              >
-                <Linkedin size={20} />
+              <a href="#" className="social-icon hover:text-blue-600">
+                <Linkedin size={18} />
               </a>
 
-              {/* Instagram */}
-              <a 
-                href="https://www.instagram.com/p/DP0qg2jD8Gj/" 
-                target="_blank" rel="noopener noreferrer" 
-                className="social-icon hover:text-pink-500"
-              >
-                <Instagram size={20} />
+              <a href="#" className="social-icon hover:text-pink-500">
+                <Instagram size={18} />
               </a>
             </div>
           </motion.div>
 
           {/* NEWSLETTER */}
           <motion.div variants={item}>
-            <h4 className="font-roboto font-bold mb-6 text-lg text-white">Newsletter</h4>
-            <p className="font-roboto text-sm text-white/70 mb-4">
-              Recevez nos actualités et opportunités financières.
+            <h4 className="font-bold mb-5 text-base sm:text-lg">
+              Newsletter
+            </h4>
+
+            <p className="text-xs sm:text-sm text-white/70 mb-4">
+              Recevez nos actualités
             </p>
-            <div className="flex flex-col gap-3">
+
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Votre email"
-                className="bg-white/10 border border-white/20 px-4 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-mujec-gold text-white"
+                className="flex-1 bg-white/10 border border-white/20 px-3 py-2 rounded-lg text-xs sm:text-sm outline-none focus:ring-2 focus:ring-mujec-gold"
               />
-              <button className="bg-mujec-gold text-mujec-dark py-2 rounded-xl font-bold text-sm hover:scale-105 transition">
-                S’inscrire
+
+              <button className="bg-mujec-gold text-mujec-dark px-4 py-2 rounded-lg font-bold text-xs sm:text-sm hover:scale-105 transition">
+                OK
               </button>
             </div>
           </motion.div>
@@ -162,32 +160,31 @@ const Footer = () => {
 
       {/* COPYRIGHT */}
       <div className="relative z-10 border-t border-white/10">
-        <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-6 text-center text-sm text-white/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 py-5 text-center text-xs sm:text-sm text-white/60">
           © MUJEC 2026 — Tous droits réservés
         </div>
       </div>
 
-      <style jsx>
-        {`
-          .social-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all .3s ease;
-            color: white;
-          }
-          .social-icon:hover {
-            transform: scale(1.15);
-            background: rgba(255,255,255,0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-          }
-        `}
-      </style>
+      {/* STYLE */}
+      <style jsx>{`
+        .social-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all .3s ease;
+          color: white;
+        }
+        .social-icon:hover {
+          transform: scale(1.15);
+          background: rgba(255,255,255,0.2);
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+      `}</style>
     </footer>
   );
 };

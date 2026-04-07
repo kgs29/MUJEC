@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import slide1 from "../assets/hero-bg.jpg";
+import slide5 from "../assets/hero-bg.jpg";
 import slide2 from "../assets/hero-bg-2.jpeg";
 import slide3 from "../assets/hero-bg-3.jpg";
 // import slide4 from "../assets/hero-bg-4.png";
-import slide5 from "../assets/hero-bg-5.png";
+import slide1 from "../assets/hero-bg-5.png";
 const slides = [
   {
     image: slide1,
