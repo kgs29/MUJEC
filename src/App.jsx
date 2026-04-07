@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import Services from "./components/Services";
 import AccountsSection from './components/AccountsSection';
 import ContactSection from './components/ContactSection';
-import About from './components/about';
+import About from './components/About';
 import Testimonials from './components/Testimonials';
 import JoinSection from './components/JoinSection';
 import Footer from './components/Footer'
@@ -20,8 +20,8 @@ function App() {
       <Services />
       <AccountsSection />
       <About />
+       <JoinSection />
       <Testimonials />
-      <JoinSection />
       <ContactSection />
       <Footer />
     </div>

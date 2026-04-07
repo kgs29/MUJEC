@@ -22,11 +22,11 @@ const JoinSection = () => {
           
           {/* Bloc de Gauche : Titre et CTA */}
           <div className="max-w-2xl">
-            <h2 className="mb-10 text-[56px] font-bold leading-[0.95] text-white md:text-[88px] tracking-tighter lowercase">
+            <h2 className="font-roboto text-roboto-lg mb-10 text-[56px] font-bold leading-[0.95] text-white md:text-[160px] tracking-tighter lowercase">
               rejoignez mujec <br /> aujourd'hui
             </h2>
             
-            <button className="group flex items-center gap-4 rounded-full bg-white px-8 py-5 text-lg font-bold text-black transition-transform hover:scale-105">
+            <button className="font-roboto text-roboto-base group flex items-center gap-4 rounded-full bg-white px-8 py-5 text-lg font-bold text-black transition-transform hover:scale-105">
               Ouvrir un Compte
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0a1120] text-white transition-transform group-hover:translate-x-1">
                 <ArrowRight size={20} />
@@ -36,9 +36,8 @@ const JoinSection = () => {
 
           {/* Bloc de Droite : Texte de confiance */}
           <div className="text-left md:text-right pb-4">
-            <p className="text-2xl font-light leading-tight text-white md:text-3xl">
-              Plus de <span className="font-bold text-[#facc15] text-4xl">2 000</span> entrepreneurs <br /> 
-              nous font confiance
+            <p className="font-roboto text-roboto-base text-4xl font-light leading-tight text-white md:text-5xl">
+              Plus de <span className="font-bold text-[#facc15] text-5xl md:text-6xl">2 000</span> entrepreneurs nous font confiance
             </p>
           </div>
 

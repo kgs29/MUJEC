@@ -23,7 +23,7 @@ const accounts = [
       "PV d'autorisation d'ouverture du compte association",
       "Abonnement SMS Banking 1.000 FCFA",
       "Frais mensuel SMS Banking 500 FCFA",
-      "02 photos 4x4",
+      "02 photos 4x4 Par signataire" ,
     ],
   },
   {
@@ -41,7 +41,7 @@ const accounts = [
       "Demande d'ouverture du compte courant",
       "Abonnement SMS Banking 1.000 FCFA",
       "Frais mensuel SMS Banking 500 FCFA",
-      "02 photos 4x4",
+      "02 photos 4x4 Par signataire" ,
     ],
   },
   {
@@ -54,8 +54,8 @@ const accounts = [
       "Frais de carnet 500 FCFA",
       "CNI du signataire",
       "NUI du signataire",
-      "Abonnement SMS Banking 1.000 FCFA",
-      "Frais mensuel SMS Banking 500 FCFA",
+      "Abonnement SMS Banking 200 FCFA",
+      "Frais mensuel SMS Banking 200 FCFA",
       "01 photo 4x4",
     ],
   },
@@ -69,7 +69,7 @@ const accounts = [
       "Photocopie CNI valide",
       "Plan de localisation",
       "NUI du signataire",
-      "Abonnement SMS Banking 1.000 FCFA",
+      "Abonnement SMS Banking 500 FCFA",
       "Frais mensuel SMS Banking 500 FCFA",
       "02 photos 4x4",
     ],
@@ -77,7 +77,7 @@ const accounts = [
   {
     title: "Compte Épargne / Bloqué",
     subtitle: "Épargne Sécurisée",
-    price: "5 000",
+    price: "10 000",
     color: "gold",
     icon: PiggyBank,
     documents: [
@@ -85,8 +85,23 @@ const accounts = [
       "NUI ou facture ENEO / CAMWATER",
       "Photocopie CNI valide",
       "Plan de localisation",
-      "Abonnement SMS Banking 1.000 FCFA",
-      "Frais mensuel SMS Banking 500 FCFA",
+      "Abonnement SMS Banking 500 FCFA",
+      "Frais mensuel SMS Banking 200 FCFA",
+      "02 photos 4x4",
+    ],
+  },
+  {
+    title: "Compte Épargne Scolaire",
+    subtitle: "Préparez l'avenir de vos enfants",
+    price: "5000",
+    color: "gold",
+    icon: PiggyBank,
+    documents: [
+      "Frais d'ouverture 0 FCFA",
+      "Plan de localisation",
+      "NUI OU FACTURE ENEO / CAMWATER",
+      "Photocopie CNI valide du parent",
+      "Plan de localisation",
       "02 photos 4x4",
     ],
   },
@@ -122,7 +137,7 @@ const AccountsSection = () => {
     <section
       id="comptes"
       ref={sectionRef}
-      className="bg-gray-50 py-20 px-4 md:px-10 scroll-mt-24"
+      className="bg-gray-50 py-2 px-4 md:px-10 scroll-mt-4"
     >
       {/* Header */}
       <div
@@ -138,37 +153,43 @@ const AccountsSection = () => {
             Choisissez le compte adapté à vos besoins
           </p>
         </div>
-
         <span className="bg-mujec-dark text-white px-5 py-2 rounded-full text-sm font-bold w-fit">
-          5 Types de Comptes
+          6 Types de Comptes
         </span>
       </div>
 
-      {/* Horizontal scroll */}
+      {/* Grid */}
       <div className="max-w-7xl mx-auto">
-        <div className="flex gap-6 md:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide px-1">
+        <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 px-1">
           {accounts.map((account, index) => {
             const Icon = account.icon;
 
             return (
               <div
                 key={index}
-                className={`min-w-[85%] sm:min-w-[340px] md:min-w-[360px] snap-center transition-all duration-700 ${
+                className={`transition-all duration-700 ${
                   visible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"
                 }`}
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <div className="group bg-white p-8 rounded-3xl shadow-lg border border-gray-100 flex flex-col h-full hover:shadow-2xl transition-all duration-300">
+                <div className="group bg-white p-8 rounded-3xl shadow-lg border-2 border-blue-500 flex flex-col h-full hover:shadow-2xl hover:border-blue-600 transition-all duration-300">
                   
-                  {/* ICON PREMIUM */}
+                  {/* Badge spécial épargne scolaire */}
+                  {account.title === "Compte Épargne Scolaire" && (
+                    <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full mb-4 w-fit font-bold">
+                      Idéal pour la rentrée scolaire
+                    </span>
+                  )}
+
+                  {/* Icon */}
                   <div
                     className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center transition-all duration-500
                     ${
                       account.color === "gold"
-                        ? "bg-mujec-gold/20 text-mujec-gold group-hover:shadow-[0_0_25px_rgba(234,179,8,0.35)]"
-                        : "bg-mujec-blue/10 text-mujec-blue group-hover:shadow-[0_0_25px_rgba(37,99,235,0.35)]"
+                        ? "bg-mujec-gold/20 text-mujec-gold"
+                        : "bg-mujec-blue/10 text-mujec-blue"
                     }
                     group-hover:scale-110 group-hover:rotate-6`}
                   >
@@ -189,7 +210,6 @@ const AccountsSection = () => {
                     {account.subtitle}
                   </span>
 
-                  {/* Price */}
                   <div className="mb-6">
                     <p className="text-sm text-gray-500">Dépôt minimum</p>
                     <p className="text-3xl font-extrabold text-mujec-dark">
@@ -198,7 +218,6 @@ const AccountsSection = () => {
                     </p>
                   </div>
 
-                  {/* Documents */}
                   <ul className="text-sm space-y-3 mb-8 flex-grow text-gray-600">
                     {account.documents.map((doc, i) => (
                       <li key={i} className="flex items-start gap-2">
@@ -208,7 +227,6 @@ const AccountsSection = () => {
                     ))}
                   </ul>
 
-                  {/* Button */}
                   <button
                     className={`w-full py-3 rounded-xl font-bold transition-all active:scale-95 hover:scale-105 ${
                       account.color === "gold"
@@ -223,10 +241,6 @@ const AccountsSection = () => {
             );
           })}
         </div>
-
-        <p className="text-center text-sm text-gray-400 mt-4">
-          ← Faites défiler horizontalement pour voir tous les comptes →
-        </p>
       </div>
     </section>
   );

@@ -36,6 +36,38 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Smooth scroll that accounts for fixed navbar height
+  const scrollToId = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const nav = document.querySelector("nav");
+    const navHeight = nav ? nav.offsetHeight : 0;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+    window.scrollTo({ top, behavior: "smooth" });
+    history.replaceState(null, "", `#${id}`);
+  };
+
+  // Expose nav height as a CSS variable so sections can use it for scroll-margin
+  useEffect(() => {
+    const updateNavHeight = () => {
+      const nav = document.querySelector("nav");
+      const navHeight = nav ? nav.offsetHeight : 0;
+      document.documentElement.style.setProperty(
+        "--nav-height",
+        `${navHeight + 8}px`
+      );
+    };
+
+    updateNavHeight();
+    window.addEventListener("resize", updateNavHeight);
+    window.addEventListener("load", updateNavHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateNavHeight);
+      window.removeEventListener("load", updateNavHeight);
+    };
+  }, [scrolled]);
+
   const linkClass = (id) =>
     `text-subtitle transition-all duration-300 ${
       activeSection === id
@@ -71,10 +103,10 @@ const Navbar = () => {
               }`}
             />
             <div className="text-white leading-tight hidden sm:block">
-              <h1 className="font-bold text-title">
+              <h1 className="font-roboto text-roboto-lg font-bold text-title">
                 MUTUELLE DES JEUNES
               </h1>
-              <p className="text-subtitle">
+              <p className="font-roboto text-roboto-md text-subtitle">
                 ENTREPRENEURS DU CAMEROUN
               </p>
             </div>
@@ -83,7 +115,14 @@ const Navbar = () => {
           {/* Desktop menu */}
           <div className="hidden md:flex items-center gap-8">
             {sections.map((id) => (
-              <a key={id} href={`#${id}`} className={linkClass(id)}>
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToId(id);
+                }}
+                className={`font-roboto text-roboto-base ${linkClass(id)}`}>
                 {id === "apropos"
                   ? "À Propos"
                   : id.charAt(0).toUpperCase() + id.slice(1)}
@@ -92,7 +131,11 @@ const Navbar = () => {
 
             <a
               href="#contact"
-              className="bg-mujec-gold text-mujec-dark px-5 py-2 rounded-full font-bold text-subtitle hover:scale-105 transition"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToId("contact");
+              }}
+              className="font-roboto text-roboto-base bg-mujec-gold text-mujec-dark px-5 py-2 rounded-full font-bold text-subtitle hover:scale-105 transition"
             >
               Nous Contacter
             </a>
@@ -119,8 +162,12 @@ const Navbar = () => {
               <a
                 key={id}
                 href={`#${id}`}
-                onClick={() => setMenuOpen(false)}
-                className={`${linkClass(id)} text-lg`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToId(id);
+                  setMenuOpen(false);
+                }}
+                className={`font-roboto text-roboto-base ${linkClass(id)} text-lg`}
               >
                 {id === "apropos"
                   ? "À Propos"
@@ -131,7 +178,7 @@ const Navbar = () => {
             <a
               href="#contact"
               onClick={() => setMenuOpen(false)}
-              className="mt-6 bg-mujec-gold text-mujec-dark py-3 text-center rounded-full font-bold"
+              className="font-roboto text-roboto-base mt-6 bg-mujec-gold text-mujec-dark py-3 text-center rounded-full font-bold"
             >
               Nous Contacter
             </a>
