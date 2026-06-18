@@ -171,7 +171,7 @@ const About = () => {
 
           {[{
             title: "Vision",
-            text: "Devenir une institution financière majeure à l’horizon 2035."
+            text: "La MUJEC est née de la vision d'un groupe de jeunes soucieux de promouvoir l'éducation financière, et l'inclusion des jeunes entrepreneurs très souvent exclus du système classique, à bénéficier des services financiers."
           },{
             title: "Mission",
             text: "Réduire la vulnérabilité financière des populations."
